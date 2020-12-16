@@ -82,6 +82,7 @@ adminRoutes.route('/remove/:id').delete((req, res) => {
     })
 })
 
+
 app.use('/portal', adminRoutes); //all the routes will be relative to this route
 
 app.listen(PORT, () => {
