@@ -42,8 +42,12 @@ adminRoutes.route('/').get((req, res) => {
 
 adminRoutes.route('/:id').get((req, res) =>{
     let id = req.params.id;
-    Demographics.findById(_id, (req, res) =>{
+    Demographics.findById(id, (err, demographic) =>{
+        if (err){
+            console.log(err)
+        } else {
         res.json(demographic);
+        }
     })
 })
 
@@ -54,16 +58,26 @@ adminRoutes.route('/create').post((req, res) =>{
             res.status(200).json({'demographic': 'added successfully'});
         })
         .catch(err => {
-            res.status(400).send('failed to add new demographics')
+            res.status(400).send('failed to add new patient')
         })
 })
 
 adminRoutes.route('/edit/:id').post((req, res) => {
-    Demographics.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedModel)=> {
+    Demographics.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, demographic)=> {
         if (!demographic) {
             res.status(404).send('no data found');
         } else {
            res.redirect('/portal')
+        }
+    })
+})
+
+adminRoutes.route('/remove/:id').delete((req, res) => {
+    Demographics.findByIdAndRemove(req.params.id, (err, removedPatient) => {
+        if (err){
+            res.status(400).send('failed to remove patient')
+        } else {
+            res.status(200).json(removedPatient);
         }
     })
 })
