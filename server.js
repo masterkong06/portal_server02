@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const adminRoutes = express.Router();
-const PORT = 3003;
+const PORT = process.env.PORT || 3003;
 
 
 
@@ -13,11 +13,13 @@ let Demographics = require('./models/demographics');
 app.use(cors());
 app.use(bodyParser.json());
 
+const MONDODB_URI = process.env.MONDODB_URI || 'mongodb://localhost/portalDB';
+
 
 mongoose.connection.on('error', err => console.log(err.message + ' is Mongod not running?'));
 mongoose.connection.on('disconnected', () => console.log ('mongo is disconnected'));
 
-mongoose.connect('mongodb://localhost/portalDB', {
+mongoose.connect(MONDODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true // prevents errors when connecting to mongoDB
 });
@@ -40,7 +42,7 @@ adminRoutes.route('/').get((req, res) => {
 
 adminRoutes.route('/:id').get((req, res) =>{
     let id = req.params.id;
-    Demographics.findById(id, (req, res) =>{
+    Demographics.findById(_id, (req, res) =>{
         res.json(demographic);
     })
 })
