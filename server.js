@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const adminRoutes = express.Router();
+require('dotenv').config()
 const PORT = process.env.PORT || 3003;
 
 
