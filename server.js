@@ -4,7 +4,10 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const adminRoutes = express.Router();
-require('dotenv').config()
+require('dotenv').config();
+const jwt = require('express-jwt');
+const jwks = require('jwks-rsa');
+
 const PORT = process.env.PORT || 3003;
 
 
