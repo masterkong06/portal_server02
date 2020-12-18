@@ -16,6 +16,7 @@ let Demographics = require('./models/demographics');
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const MONDODB_URI = process.env.MONDODB_URI || 'mongodb://localhost/portalDB';
 
